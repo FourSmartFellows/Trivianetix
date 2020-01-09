@@ -220,7 +220,7 @@ class App extends Component {
       })
   }
 
-  leaderboardFetch() {
+  leaderboardFetch() { // GOT /response/leaderboard for fetch
     const data = [
       {
         "country": "AD",

@@ -4,10 +4,10 @@ module.exports = {
   entry: './client/',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   devServer: {
-    // contentBase: __dirname,
+    // contentBase: path.resolve(__dirname, 'build')
     publicPath: '/build/',
     proxy: {
       '/api': 'http://localhost:3000',
@@ -22,20 +22,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-            ],
+            presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ],
-      },
-    ],
-  },
-}
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  }
+};
+
