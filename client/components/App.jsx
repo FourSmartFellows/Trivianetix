@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserInfo from "./UserInfo.jsx";
 import Stats from "./Stats.jsx";
 import GameContainer from "./GameContainer.jsx";
+// import ChatWindow from "./ChatWindow.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -137,8 +138,6 @@ class App extends Component {
       }
     }
 
-
-
     e.target.checked = false;
     setTimeout((e) => {
       document.getElementById('buttona').style.backgroundColor = '';
@@ -209,6 +208,7 @@ class App extends Component {
               gameMode={this.state.gameMode}
               question={this.state.question}
               handleChange={this.handleChange} />
+              {/* <ChatWindow /> */}
           </React.Fragment>}
         {/* ================================================================= */}
       </div>

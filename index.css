@@ -1,15 +1,5 @@
 
-/* body {
-    background: linear-gradient(#bbe1fa, #3282b8, #0f4c75, #1b262c);
-    
-  } */
 
-@import "node_modules/nord/src/nord.css";
-
-body {
-  background-color: var(--nord0);
-  color: var(--nord8);
-}
 .sign-in {
     /* Size and position */
     width: 300px;
@@ -17,10 +7,6 @@ body {
     padding: 10px;
     position: relative;
 
-    /* Font styles */
-
-
-    /* text-shadow: 0 2px 1px rgba(0,0,0,0.3); */
 }
 
 .sign-in h1 {
