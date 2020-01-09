@@ -21,17 +21,15 @@ statsController.createResponse = (req, res, next) => {
   const text1 = `
           SELECT username, _id
           FROM users 
-          WHERE username LIKE $1
+          WHERE username LIKE $1;
       `;
   const text2 = `
           INSERT INTO response (category, difficulty, is_correct, actual_answer, chosen_answer, users_id, question, "current_time", response_time )
-          values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          values ($1, $2, $3, $4, $5, $6, $7, $8, $9);
       `;
 
   const values1 = [username];
 
-  console.log('values array', values1);
-  // const values = [username];
   db.query(text1, values1)
     .then(response => {
       if (response.rows[0]) {
@@ -61,41 +59,65 @@ statsController.createResponse = (req, res, next) => {
     });
 };
 
-statsController.leaderByCategory = (req, res, next) => {
-  const { username, stats, category } = req.body;
-  const percentage = Math.floor(
-    (stats.correctAnswers / stats.gamesPlayed) * 100
-  );
-  //query
-  next();
+statsController.leaderboard = (req, res, next) => {
+  const text = `SELECT username, users_id, category, difficulty FROM response r 
+                INNER JOIN users u ON u._id = r.users_id 
+                WHERE is_correct LIKE 'true'
+                ORDER BY users_id asc;`;
+  db.query(text)
+    .then(response => {
+      res.locals.leaders = response.rows;
+      next();
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
 };
 
-statsController.leaderByAge = (req, res, next) => {
-  const { username, stats } = req.body;
-  const percentage = Math.floor(
-    (stats.correctAnswers / stats.gamesPlayed) * 100
-  );
-  //query
-  next();
-};
+// statsController.leaderByDifficulty = (req, res, next) => {
+//   const { username, stats, difficulty } = req.body;
+//   const percentage = Math.floor(
+//     (stats.correctAnswers / (stats.gamesPlayed * 10)) * 100
+//   );
+//   const text = `SELECT users_id FROM response r
+//                 INNER JOIN users u on u._id = r.users_id
+//                 WHERE difficulty = ($1, $2, $3)`;
 
-statsController.leaderByState = (req, res, next) => {
-  const { username, stats } = req.body;
-  const percentage = Math.floor(
-    (stats.correctAnswers / stats.gamesPlayed) * 100
-  );
-  //query
-  next();
-};
+//   const values = ['easy', 'medium', 'hard'];
 
-statsController.leaderByEducation = (req, res, next) => {
-  const { username, stats } = req.body;
-  const percentage = Math.floor(
-    (stats.correctAnswers / stats.gamesPlayed) * 100
-  );
-  //query
-  next();
-};
+//   db.query(text, values)
+//     .then(response => console.log(response))
+//     .catch(err => console.log('Error in leader by difficulty middleware', err));
+//   next();
+// };
+
+// statsController.leaderByAge = (req, res, next) => {
+//   const { username, stats } = req.body;
+//   const percentage = Math.floor(
+//     (stats.correctAnswers / (stats.gamesPlayed * 10)) * 100
+//   );
+//   //query
+//   next();
+// };
+
+// statsController.leaderByState = (req, res, next) => {
+//   const { username, stats } = req.body;
+//   const percentage = Math.floor(
+//     (stats.correctAnswers / (stats.gamesPlayed * 10)) * 100
+//   );
+//   //query
+//   next();
+// };
+
+// statsController.leaderByEducation = (req, res, next) => {
+//   const { username, stats } = req.body;
+//   const percentage = Math.floor(
+//     (stats.correctAnswers / (stats.gamesPlayed * 10)) * 100
+//   );
+//   //query
+//   next();
+// };
 
 /*
   helpful query examples
